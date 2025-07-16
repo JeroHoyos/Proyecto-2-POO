@@ -2,14 +2,13 @@ from equipaje import Equipaje
 from enums import TipoEquipaje, TipoSilla
 
 class CheckIn:
-    """Gestiona el proceso de check-in y cálculo de costos de equipaje."""
     def __init__(self, reserva):
         self.reserva = reserva
         self.equipajes = []
         self.costo_total_equipaje = 0
 
     def agregar_equipaje(self, equipaje_data):
-        """Añade un equipaje (silla_asociada, equipaje_obj) a la lista para check-in."""
+
         self.equipajes.append(equipaje_data)
 
     def realizar_check_in(self):
@@ -35,7 +34,9 @@ class CheckIn:
         return False, f"Error: El check-in para la reserva {self.reserva.id_reserva} ya ha sido realizado."
 
     def calcular_costo_total_equipaje(self):
-        """Calcula el costo total del equipaje según las políticas de la aerolínea."""
+        """
+        Calcula el costo total del equipaje según las políticas de la aerolínea.
+        """
         self.costo_total_equipaje = 0
         maletas_bodega_gratuitas_usadas_por_silla_preferencial_count = {silla.id_silla: 0 for silla in self.reserva.sillas if silla.tipo == TipoSilla.PREFERENCIAL}
 

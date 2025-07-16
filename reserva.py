@@ -1,4 +1,4 @@
-import uuid
+import uuid #Esto para generar ID o identificadores de forma comoda xd 
 from silla import Silla
 from pasajero import Pasajero
 from enums import TipoSilla
@@ -6,7 +6,6 @@ from vuelo import Vuelo
 from usuario import Usuario
 
 class Reserva:
-    """Representa una reserva de vuelo realizada por un usuario."""
     def __init__(self, id_reserva: int, vuelo: Vuelo, usuario: Usuario, pasajeros: list[Pasajero], sillas: list[Silla], checkin_realizado: bool = False, precio_total: float = 0.0):
         self.id_reserva = id_reserva
         self.vuelo = vuelo
@@ -17,16 +16,13 @@ class Reserva:
         self.precio_total = precio_total
 
     def to_string(self) -> str:
-        """Convierte el objeto Reserva a una cadena para serialización TXT (usando '|' como delimitador principal)."""
         pasajeros_str = ",".join([p.to_string() for p in self.pasajeros])
-        sillas_str = ";".join([s.to_string() for s in self.sillas]) # Las sillas usan ';' como delimitador interno
-        # Usamos '|' como delimitador principal para consistencia
+        sillas_str = ";".join([s.to_string() for s in self.sillas])
         return f"{self.id_reserva}|{self.vuelo.codigo}|{self.usuario.documento}|{pasajeros_str}|{sillas_str}|{self.checkin_realizado}|{self.precio_total}"
 
     @staticmethod
-    def from_string(data_string: str, all_vuelos: list[Vuelo], all_usuarios: list[Usuario]):
-        """Crea un objeto Reserva a partir de una cadena TXT (esperando '|' como delimitador principal)."""
-        parts = data_string.strip().split('|') # Cambiado de ':' a '|'
+    def from_string(data_string, all_vuelos, all_usuarios):
+        parts = data_string.strip().split('|')
         if len(parts) != 7:
             raise ValueError(f"Formato de línea de reserva incorrecto: {data_string}. Se esperaban 7 partes separadas por '|'.")
 
@@ -50,7 +46,3 @@ class Reserva:
         sillas = [Silla.from_string(s_str) for s_str in sillas_data_str.split(';')] if sillas_data_str else []
 
         return Reserva(id_reserva, vuelo, usuario, pasajeros, sillas, checkin_realizado, precio_total)
-
-    def calcular_precio_total_reserva(self):
-        """No implementado activamente; el precio se calcula en creación y check-in."""
-        pass

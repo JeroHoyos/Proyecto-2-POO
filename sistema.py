@@ -1,5 +1,5 @@
-import os
-import re
+import os #Manejo archivos sistema
+import re #Expresiones regulares
 from tkinter import messagebox
 from vuelo import Vuelo
 from cliente import Cliente
@@ -19,9 +19,9 @@ class Sistema:
         self.usuarios: list[Usuario] = []
         self.vuelos: list[Vuelo] = []
         self.reservas: list[Reserva] = []
-        self.next_reserva_id = 1000
+        self.siguiente_id_reserva = 1000
 
-    def registrar_usuario(self, nombre: str, correo: str, documento: str, contrasena: str, es_admin: bool = False) -> str:
+    def registrar_usuario(self, nombre, correo, documento, contrasena, es_admin: bool = False):
         """Registra un nuevo usuario o administrador."""
         for u in self.usuarios:
             if u.documento == documento:
@@ -38,7 +38,7 @@ class Sistema:
                 return u
         return None
 
-    def buscar_vuelos(self, criterio: str, por_origen: bool = True) -> list[Vuelo]:
+    def buscar_vuelos(self, criterio, por_origen: bool = True):
         """Busca vuelos por origen o destino."""
         resultados = []
         for v in self.vuelos:
@@ -129,8 +129,8 @@ class Sistema:
             sillas_asignadas.append(silla_encontrada)
             precio_total_reserva += costo_silla
 
-        id_reserva = self.next_reserva_id
-        self.next_reserva_id += 1
+        id_reserva = self.siguiente_id_reserva 
+        self.siguiente_id_reserva += 1
 
         nueva_reserva = Reserva(id_reserva, vuelo, usuario, pasajeros_datos, sillas_asignadas, precio_total=precio_total_reserva)
         self.reservas.append(nueva_reserva)
@@ -140,7 +140,7 @@ class Sistema:
         resumen = f"Reserva #{nueva_reserva.id_reserva} para vuelo {vuelo.codigo} con {len(pasajeros_datos)} pasajeros."
         return resumen, precio_total_reserva
 
-    def cancelar_reserva(self, id_reserva: int, usuario_que_cancela: Usuario) -> str:
+    def cancelar_reserva(self, id_reserva, usuario_que_cancela):
         """Cancela una reserva y libera las sillas."""
         reserva_a_cancelar = next((r for r in self.reservas if r.id_reserva == id_reserva and r.usuario.documento == usuario_que_cancela.documento), None)
 
@@ -160,30 +160,30 @@ class Sistema:
 
         return f"Reserva {id_reserva} cancelada exitosamente."
 
-    def obtener_reservas_por_usuario(self, usuario: Usuario) -> list[Reserva]:
+    def obtener_reservas_por_usuario(self, usuario):
         """Obtiene todas las reservas realizadas por un usuario específico."""
         return [r for r in self.reservas if r.usuario.documento == usuario.documento]
 
     def cargar_datos(self):
         """Carga datos de usuarios, vuelos y reservas desde archivos TXT."""
-        ruta_next_id = "next_reserva_id.txt"
-        if os.path.exists(ruta_next_id):
+        ruta_siguiente_id_reserva = "siguiente_id_reserva.txt" 
+        if os.path.exists(ruta_siguiente_id_reserva):
             try:
-                with open(ruta_next_id, "r", encoding="utf-8") as f:
+                with open(ruta_siguiente_id_reserva, "r", encoding="utf-8") as f:
                     content = f.read().strip()
                     if content:
                         match = re.search(r'(\d+)$', content)
                         if match:
-                            self.next_reserva_id = int(match.group(1))
+                            self.siguiente_id_reserva = int(match.group(1))
                         else:
-                            self.next_reserva_id = int(content)
+                            self.siguiente_id_reserva = int(content) 
                     else:
-                        raise ValueError("El archivo next_reserva_id.txt está vacío.")
+                        raise ValueError("El archivo siguiente_id_reserva.txt está vacío.")
             except (ValueError, FileNotFoundError, IOError) as e:
-                print(f"Advertencia: No se pudo cargar el próximo ID de reserva de {ruta_next_id}. Se reiniciará a 1000. Error: {e}")
-                self.next_reserva_id = 1000
+                print(f"Advertencia: No se pudo cargar el próximo ID de reserva de {ruta_siguiente_id_reserva}. Se reiniciará a 1000. Error: {e}")
+                self.siguiente_id_reserva = 1000
         else:
-            self.next_reserva_id = 1000
+            self.siguiente_id_reserva = 1000 
 
         ruta_usuarios = "usuarios.txt"
         if os.path.exists(ruta_usuarios):
@@ -200,12 +200,12 @@ class Sistema:
             except Exception as e:
                 print(f"Error al leer usuarios de {ruta_usuarios}: {e}")
 
-        ruta_vuelos_persistencia = "vuelos_persistencia.txt"
+        ruta_vuelos_y_sillas = "vuelos_y_sillas.txt"
         ruta_vuelos_inicial = "vuelos.txt"
         
-        if os.path.exists(ruta_vuelos_persistencia) and os.path.getsize(ruta_vuelos_persistencia) > 0:
+        if os.path.exists(ruta_vuelos_y_sillas) and os.path.getsize(ruta_vuelos_y_sillas) > 0:
             try:
-                with open(ruta_vuelos_persistencia, "r", encoding="utf-8") as f:
+                with open(ruta_vuelos_y_sillas, "r", encoding="utf-8") as f:
                     for line in f:
                         if line.strip():
                             try:
@@ -215,7 +215,7 @@ class Sistema:
                                 print(f"Error al cargar línea de vuelo persistente: {ve} en '{line.strip()}'")
                                 continue
             except Exception as e:
-                print(f"Error al leer vuelos de persistencia {ruta_vuelos_persistencia}: {e}")
+                print(f"Error al leer vuelos de persistencia {ruta_vuelos_y_sillas}: {e}")
         else:
             if os.path.exists(ruta_vuelos_inicial):
                 try:
@@ -240,8 +240,8 @@ class Sistema:
                             try:
                                 reserva = Reserva.from_string(line.strip(), self.vuelos, self.usuarios)
                                 self.reservas.append(reserva)
-                                if reserva.id_reserva >= self.next_reserva_id:
-                                    self.next_reserva_id = reserva.id_reserva + 1
+                                if reserva.id_reserva >= self.siguiente_id_reserva: 
+                                    self.siguiente_id_reserva = reserva.id_reserva + 1 
                             except ValueError as ve:
                                 print(f"Error al cargar línea de reserva: {ve} en '{line.strip()}'")
                                 continue
@@ -253,12 +253,12 @@ class Sistema:
 
     def guardar_datos(self):
         """Guarda el estado actual de usuarios, vuelos y reservas en archivos TXT."""
-        ruta_next_id = "next_reserva_id.txt"
+        ruta_siguiente_id_reserva = "siguiente_id_reserva.txt" 
         try:
-            with open(ruta_next_id, "w", encoding="utf-8") as f:
-                f.write(str(self.next_reserva_id))
+            with open(ruta_siguiente_id_reserva, "w", encoding="utf-8") as f:
+                f.write(str(self.siguiente_id_reserva)) 
         except Exception as e:
-            print(f"Error al guardar el próximo ID de reserva en {ruta_next_id}: {e}")
+            print(f"Error al guardar el próximo ID de reserva en {ruta_siguiente_id_reserva}: {e}")
 
         ruta_usuarios = "usuarios.txt"
         try:
@@ -277,10 +277,10 @@ class Sistema:
         except Exception as e:
             print(f"Error al guardar reservas en {ruta_reservas}: {e}")
 
-        ruta_vuelos_persistencia = "vuelos_persistencia.txt"
+        ruta_vuelos_y_sillas = "vuelos_y_sillas.txt"
         try:
-            with open(ruta_vuelos_persistencia, "w", encoding="utf-8") as f:
+            with open(ruta_vuelos_y_sillas, "w", encoding="utf-8") as f:
                 for vuelo in self.vuelos:
                     f.write(vuelo.to_string() + "\n")
         except Exception as e:
-            print(f"Error al guardar vuelos en {ruta_vuelos_persistencia}: {e}")
+            print(f"Error al guardar vuelos en {ruta_vuelos_y_sillas}: {e}")
