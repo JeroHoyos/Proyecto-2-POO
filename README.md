@@ -4,13 +4,26 @@
 
 Jerónimo Hoyos Botero
 ## Prsentación 
-## Usuarios Presentación
-#### Administradores
+### 1. Crear Usuarios
+#### Administrador
 Jerónimo Hoyos | jeronimo@gmail.com | ID: 10123456789 | contraseña: 3009876543
-
-Vuelo: LA9876Q CALI BARRANQUILLA MIERCOLES 11:30 18 220
-#### Usuarios
+#### Usuario
 Jero Hoyos | jero@gmail.com | ID: 10987654321 | contraseña: 3125554433 | contraseña nueva: 3047778899
+
+### 2. Crear Vuelo
+
+LA9876Q CALI BARRANQUILLA MIERCOLES 11:30 18 220
+
+### 3. Buscar vuelo
+
+LA9876Q
+
+### 4. Reservar vuelo
+Jero Hoyos | ID: 10987654321 | Economica
+Diana Botero | ID: 10987654321 | Preferencial
+Juan Carlos Hoyos | ID: 10678901234 | Preferencial
+
+### 5-7. Realizar Check IN
 
 ## Usuarios cargados
 #### Administradores

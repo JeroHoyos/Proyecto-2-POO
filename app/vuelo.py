@@ -15,7 +15,7 @@ class Vuelo:
         if sillas_str_data:
             sillas_parts = sillas_str_data.split(';')
             for s_str in sillas_parts:
-                if s_str: # Asegurarse de que la cadena no esté vacía
+                if s_str: 
                     silla = Silla.from_string(s_str)
                     self.sillas.append(silla)
                     if silla.id_silla >= self.silla_id_counter:

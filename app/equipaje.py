@@ -1,25 +1,24 @@
 from enums import TipoEquipaje
 
 class Equipaje:
-    def __init__(self, tipo, peso, volumen):
+    def __init__(self, tipo, peso):
         self.tipo = tipo
         self.peso = peso
-        self.volumen = volumen
         self.costo = 0.0
 
-    def to_string(self) -> str:
-        return f"{self.tipo.value}:{self.peso}:{self.volumen}:{self.costo}"
+    def to_string(self):
+        return f"{self.tipo.value}:{self.peso}:{self.costo}"
 
     @staticmethod
     def from_string(data_string):
         parts = data_string.split(':')
-        if len(parts) != 4:
+
+        if len(parts) != 3:
             raise ValueError(f"Formato de línea de equipaje incorrecto: {data_string}")
         
         tipo_equipaje = TipoEquipaje(parts[0])
         peso = float(parts[1])
-        volumen = float(parts[2])
-        costo = float(parts[3])
-        equipaje = Equipaje(tipo_equipaje, peso, volumen)
+        costo = float(parts[2])
+        equipaje = Equipaje(tipo_equipaje, peso)
         equipaje.costo = costo
         return equipaje

@@ -10,12 +10,10 @@ from pasajero import Pasajero
 from usuario import Usuario
 
 class Sistema:
-    """Gestiona usuarios, vuelos y reservas, incluyendo persistencia de datos."""
     PRECIO_SILLA_PREFERENCIAL = 850000.0
     PRECIO_SILLA_ECONOMICA = 235000.0
     MILLAS_PARA_DESCUENTO = 2000
 
-    # Definir la carpeta donde se guardarán y leerán los archivos de datos
     CARPETA_DATOS = "data"
 
     def __init__(self):
@@ -24,13 +22,10 @@ class Sistema:
         self.reservas: list[Reserva] = []
         self.siguiente_id_reserva = 1000
 
-        # Asegurarse de que la carpeta de datos exista al inicializar el sistema
-        # Esto creará la carpeta 'data' si no existe
         if not os.path.exists(self.CARPETA_DATOS):
             os.makedirs(self.CARPETA_DATOS)
 
-    def registrar_usuario(self, nombre: str, correo: str, documento: str, contrasena: str, es_admin: bool = False) -> str:
-        """Registra un nuevo usuario o administrador."""
+    def registrar_usuario(self, nombre, correo, documento, contrasena, es_admin: bool = False):
         for u in self.usuarios:
             if u.documento == documento:
                 return f"Error: Ya existe un usuario con el documento {documento}"
@@ -39,15 +34,13 @@ class Sistema:
         self.guardar_datos()
         return f"Usuario {nombre} ({'Administrador' if es_admin else 'Cliente'}) registrado exitosamente."
 
-    def iniciar_sesion(self, documento: str, contrasena: str) -> Usuario | None:
-        """Inicia sesión para un usuario."""
+    def iniciar_sesion(self, documento, contrasena):
         for u in self.usuarios:
             if u.documento == documento and u.contrasena == contrasena:
                 return u
         return None
 
-    def buscar_vuelos(self, criterio: str, por_origen: bool = True) -> list[Vuelo]:
-        """Busca vuelos por origen o destino."""
+    def buscar_vuelos(self, criterio, por_origen: bool = True):
         resultados = []
         for v in self.vuelos:
             if (por_origen and criterio.lower() in v.ciudad_origen.lower()) or \
@@ -56,7 +49,6 @@ class Sistema:
         return resultados
 
     def crear_vuelo(self, codigo: str, origen: str, destino: str, dia: str, horario: str, sillas_preferencial: int, sillas_economica: int) -> Vuelo:
-        """Crea un nuevo vuelo."""
         if any(v.codigo == codigo for v in self.vuelos):
             raise ValueError(f"El vuelo con código {codigo} ya existe.")
         nuevo_vuelo = Vuelo(codigo, origen, destino, dia, horario, sillas_preferencial, sillas_economica)
@@ -64,8 +56,7 @@ class Sistema:
         self.guardar_datos()
         return nuevo_vuelo
 
-    def crear_reserva(self, usuario: Usuario, vuelo: Vuelo, pasajeros_datos: list[Pasajero], tipos_silla_solicitados: list[TipoSilla]) -> tuple[str, float]:
-        """Crea una nueva reserva para uno o más pasajeros en un vuelo."""
+    def crear_reserva(self, usuario, vuelo, pasajeros_datos, tipos_silla_solicitados):
         if not pasajeros_datos or not tipos_silla_solicitados or len(pasajeros_datos) != len(tipos_silla_solicitados):
             raise ValueError("Cantidad de pasajeros y tipos de silla no coinciden o están vacíos.")
         if len(pasajeros_datos) > 3:
@@ -148,8 +139,8 @@ class Sistema:
         resumen = f"Reserva #{nueva_reserva.id_reserva} para vuelo {vuelo.codigo} con {len(pasajeros_datos)} pasajeros."
         return resumen, precio_total_reserva
 
-    def cancelar_reserva(self, id_reserva: int, usuario_que_cancela: Usuario) -> str:
-        """Cancela una reserva y libera las sillas."""
+    def cancelar_reserva(self, id_reserva, usuario_que_cancela):
+
         reserva_a_cancelar = next((r for r in self.reservas if r.id_reserva == id_reserva and r.usuario.documento == usuario_que_cancela.documento), None)
 
         if not reserva_a_cancelar:
@@ -169,11 +160,9 @@ class Sistema:
         return f"Reserva {id_reserva} cancelada exitosamente."
 
     def obtener_reservas_por_usuario(self, usuario: Usuario) -> list[Reserva]:
-        """Obtiene todas las reservas realizadas por un usuario específico."""
         return [r for r in self.reservas if r.usuario.documento == usuario.documento]
 
     def cargar_datos(self):
-        """Carga datos de usuarios, vuelos y reservas desde archivos TXT."""
         ruta_siguiente_id_reserva = os.path.join(self.CARPETA_DATOS, "siguiente_id_reserva.txt")
         if os.path.exists(ruta_siguiente_id_reserva):
             try:
@@ -260,7 +249,6 @@ class Sistema:
             usuario.reservas = [r for r in self.reservas if r.usuario.documento == usuario.documento]
 
     def guardar_datos(self):
-        """Guarda el estado actual de usuarios, vuelos y reservas en archivos TXT."""
         ruta_siguiente_id_reserva = os.path.join(self.CARPETA_DATOS, "siguiente_id_reserva.txt")
         try:
             with open(ruta_siguiente_id_reserva, "w", encoding="utf-8") as f:

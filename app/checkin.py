@@ -8,7 +8,6 @@ class CheckIn:
         self.costo_total_equipaje = 0
 
     def agregar_equipaje(self, equipaje_data):
-
         self.equipajes.append(equipaje_data)
 
     def realizar_check_in(self):
@@ -34,9 +33,7 @@ class CheckIn:
         return False, f"Error: El check-in para la reserva {self.reserva.id_reserva} ya ha sido realizado."
 
     def calcular_costo_total_equipaje(self):
-        """
-        Calcula el costo total del equipaje según las políticas de la aerolínea.
-        """
+        """Calcula el costo total del equipaje según las políticas de la aerolínea."""
         self.costo_total_equipaje = 0
         maletas_bodega_gratuitas_usadas_por_silla_preferencial_count = {silla.id_silla: 0 for silla in self.reserva.sillas if silla.tipo == TipoSilla.PREFERENCIAL}
 
@@ -46,23 +43,23 @@ class CheckIn:
             costo_individual = 0
 
             if equipaje_actual.tipo == TipoEquipaje.MANO:
-                costo_individual = 0
+                costo_individual = 0 
             
             elif equipaje_actual.tipo == TipoEquipaje.CABINA:
                 if tipo_silla == TipoSilla.PREFERENCIAL:
                     costo_individual = 0
                 elif tipo_silla == TipoSilla.ECONOMICA:
-                    costo_individual = 40000
+                    costo_individual = 40000 
             
             elif equipaje_actual.tipo == TipoEquipaje.BODEGA:
                 if tipo_silla == TipoSilla.PREFERENCIAL:
                     if maletas_bodega_gratuitas_usadas_por_silla_preferencial_count.get(silla_asociada.id_silla, 0) == 0:
                         costo_individual = 0
-                        maletas_bodega_gratuitas_usadas_por_silla_preferencial_count[silla_asociada.id_silla] = 1
+                        maletas_bodega_gratuitas_usadas_por_silla_preferencial_count[silla_asociada.id_silla] = 1 
                     else:
-                        costo_individual = 50000 + (equipaje_actual.peso * 1000) + (equipaje_actual.volumen * 500)
+                        costo_individual = 50000 + (equipaje_actual.peso * 1000)
                 elif tipo_silla == TipoSilla.ECONOMICA:
-                    costo_individual = 50000 + (equipaje_actual.peso * 1000) + (equipaje_actual.volumen * 500)
+                    costo_individual = 50000 + (equipaje_actual.peso * 1000)
             
             equipaje_actual.costo = costo_individual
             self.costo_total_equipaje += costo_individual

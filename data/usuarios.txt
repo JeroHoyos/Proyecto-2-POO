@@ -3,7 +3,7 @@ Administrador|Juan Diego Caicedo|juan.caicedo@gmail.com|11112233445|3108765432|0
 Administrador|Daniele Sepe|daniele.sepe@gmail.com|11223344556|3207654321|0|
 Administrador|Bibiana López|bibiana.lopez@gmail.com|11334455667|3016543210|0|
 Administrador|Daniel Cabarcas|daniel.cabarcas@gmail.com|11445566778|3155432109|0|
-Cliente|Carlos Reza|carlos.reza@gmail.com|10854254785|3001112233|0|
+Cliente|Carlos Reza|carlos.reza@gmail.com|10854254785|3001112233|0|1000
 Cliente|David Blásquez|david.blasquez@gmail.com|10921345678|3104445566|0|
 Cliente|Marco Paluszny|marco.paluszny@gmail.com|10769876543|3207778899|0|
 Cliente|Leopoldo Múnera|leopoldo.munera@gmail.com|10501234567|3012223344|0|

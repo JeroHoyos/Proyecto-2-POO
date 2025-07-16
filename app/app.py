@@ -1,8 +1,7 @@
-#Cosas interfaz
 import tkinter as tk
 from tkinter import messagebox, ttk
+import os 
 
-#Clases
 from sistema import Sistema
 from enums import TipoSilla, TipoEquipaje
 from vuelo import Vuelo
@@ -13,11 +12,12 @@ from equipaje import Equipaje
 sistema = Sistema()
 sistema.cargar_datos()
 
+
 class App:
     """Clase principal de la aplicación GUI para el sistema de reservas de vuelos."""
     def __init__(self, root):
         self.root = root
-        self.root.title("Proyecto 2 POO")
+        self.root.title("Sistema de Reserva de Vuelos")
         self.usuario_actual = None
         self.vuelo_seleccionado = None
         self.reservas_usuario_actual = []
@@ -25,9 +25,7 @@ class App:
         self.pantalla_inicio()
 
     def pantalla_inicio(self):
-        """
-        Pantalla de inicio donde se ve botones de login y registro
-        """
+        """Muestra la pantalla de inicio con opciones de login y registro."""
         self.limpiar_ventana()
 
         tk.Label(self.root, text="Bienvenido al sistema de reservas", font=("Arial", 16)).pack(pady=10)
@@ -37,9 +35,6 @@ class App:
         tk.Button(self.root, text="Salir", width=20, command=self.root.quit).pack(pady=5)
 
     def pantalla_login(self):
-        """
-        Muestra TEXT EDITS para ingresar documento y contraseña
-        """
         self.limpiar_ventana()
         tk.Label(self.root, text="Iniciar Sesión", font=("Arial", 14)).pack(pady=10)
 
@@ -56,14 +51,8 @@ class App:
             pw = pass_entry.get()
             usuario = sistema.iniciar_sesion(doc, pw)
             if usuario:
-
-                #Revisar las credenciales
-
                 self.usuario_actual = usuario
                 messagebox.showinfo("Éxito", f"Bienvenido {usuario.nombre}")
-
-                #Revisar tipo de cuenta que está usando
-
                 if usuario.__class__.__name__ == "Administrador":
                     self.menu_administrador()
                 else:
@@ -75,9 +64,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_inicio).pack()
 
     def pantalla_registro(self):
-        """
-        Muestra TEXT EDITS para ingresar nombre, correo, documento y contraseña. también un check por si es administrador
-        """
         self.limpiar_ventana()
         tk.Label(self.root, text="Registro de Usuario", font=("Arial", 14)).pack(pady=10)
 
@@ -106,9 +92,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_inicio).pack()
 
     def menu_administrador(self):
-        """
-        Muestra botones para agregar vuelo, consultar ventas y consultar pasajeros
-        """
+        """Muestra el menú para el administrador."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Menú Administrador", font=("Arial", 14)).pack(pady=10)
 
@@ -118,9 +102,7 @@ class App:
         tk.Button(self.root, text="Cerrar sesión", command=self.pantalla_inicio).pack(pady=10)
 
     def pantalla_agregar_vuelo(self):
-        """
-        Muestra TEXT EDIT de código, origen, destino, día, horario y número de silla preferenciales
-        """
+        """Muestra la pantalla para agregar un nuevo vuelo."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Agregar vuelo", font=("Arial", 14)).pack(pady=10)
 
@@ -154,9 +136,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_administrador).pack()
 
     def menu_cliente(self):
-        """
-        Muestra botones para buscar vuelo, gestionar reserva, cambiar contraseña y ver millas
-        """
+        """Muestra el menú para el cliente."""
         self.limpiar_ventana()
         tk.Label(self.root, text=self.usuario_actual.ver_menu(), font=("Arial", 14)).pack(pady=10)
 
@@ -167,17 +147,11 @@ class App:
         tk.Button(self.root, text="Cerrar sesión", command=self.pantalla_inicio).pack(pady=10)
 
     def ver_mis_millas(self):
-        """
-        Muestra millas
-        """
+        """Muestra la cantidad de millas acumuladas por el usuario actual."""
         messagebox.showinfo("Mis Millas", f"Actualmente tienes {self.usuario_actual.millas} millas acumuladas.")
 
     def pantalla_cambiar_contrasena(self):
-        """
-        Pone 3 TEXT EDIT
-        la contraseña actual
-        y 2 veces la contraseña vieja
-        """
+        """Muestra la pantalla para cambiar la contraseña del usuario."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Cambiar Contraseña", font=("Arial", 14)).pack(pady=10)
 
@@ -217,11 +191,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def pantalla_buscar_vuelos(self):
-        """
-        Muestra todos los vuelos
-        un TEXTEDIT para buscar un vuelo
-        y un Boton para elegir si buscar por origen
-        """
+        """Muestra la pantalla para buscar vuelos."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Buscar vuelos", font=("Arial", 14)).pack(pady=10)
 
@@ -253,9 +223,6 @@ class App:
         self.vuelos_encontrados = []
 
         def buscar():
-            """
-            La lógica para buscar todos los vuelos
-            """
             for i in self.vuelos_tree.get_children():
                 self.vuelos_tree.delete(i)
             
@@ -277,9 +244,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def seleccionar_vuelo_para_reserva(self):
-        """
-        tras elegir un vuelo el boton te lleva a la pantall a de reservas
-        """
+        """Selecciona un vuelo de la lista para proceder con la reserva."""
         selected_item = self.vuelos_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione un vuelo de la lista.")
@@ -296,16 +261,7 @@ class App:
             messagebox.showerror("Error", "No se pudo encontrar el vuelo seleccionado.")
 
     def pantalla_reservar_vuelo(self):
-        """
-        En esta pantalla te dice 
-        Origen
-        Destino
-        DIA
-        HORA
-        CANTIDAD SILLAS
-        después llenar toda la info de cada pasajero
-        con nombre, documento  y tipo de silla
-        """
+        """Muestra la pantalla para reservar un vuelo."""
         if not self.vuelo_seleccionado:
             messagebox.showerror("Error", "Ningún vuelo seleccionado para reservar.")
             self.menu_cliente()
@@ -403,11 +359,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_buscar_vuelos).pack()
 
     def pantalla_gestionar_reservas(self):
-        """
-        Esta pantalla
-        muestra todas las reservas
-        donde la puedes modificar o realizar checkIN
-        """
+        """Muestra la pantalla para gestionar las reservas del usuario actual."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Gestionar Mis Reservas", font=("Arial", 14)).pack(pady=10)
 
@@ -449,6 +401,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def modificar_reserva(self):
+        """Prepara la pantalla para modificar la reserva seleccionada."""
         selected_item = self.reservas_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione una reserva para modificar.")
@@ -469,20 +422,19 @@ class App:
         self.pantalla_modificar_reserva(reserva_a_modificar)
 
     def pantalla_modificar_reserva(self, reserva_obj):
-        """
-        Muestra una pantalla parecida a la de reservar vuelo
-        """
+        """Muestra la pantalla para modificar los detalles de una reserva."""
         self.limpiar_ventana()
         tk.Label(self.root, text=f"Modificar Reserva: {reserva_obj.id_reserva}", font=("Arial", 14)).pack(pady=10)
         tk.Label(self.root, text=f"Vuelo: {reserva_obj.vuelo.codigo} - {reserva_obj.vuelo.ciudad_origen} a {reserva_obj.vuelo.ciudad_destino}").pack()
         tk.Label(self.root, text=f"Precio actual: ${reserva_obj.precio_total:,.0f}").pack(pady=5)
 
-    
+
         current_passengers_frame = tk.LabelFrame(self.root, text="Pasajeros y Sillas Actuales")
         current_passengers_frame.pack(pady=10, padx=10, fill="x")
 
         self.modified_pasajeros_entries = [] 
 
+    
         for i, pasajero in enumerate(reserva_obj.pasajeros):
             p_frame = tk.Frame(current_passengers_frame)
             p_frame.pack(fill="x", padx=5, pady=2)
@@ -501,14 +453,14 @@ class App:
                 "pasajero_obj": pasajero, 
                 "silla_obj": silla_actual, 
                 "tipo_silla_var": tipo_silla_var,
-                "is_new": False 
+                "is_new": False
             })
 
 
         new_passengers_frame = tk.LabelFrame(self.root, text="Añadir Nuevos Pasajeros (máx 3 en total)")
         new_passengers_frame.pack(pady=10, padx=10, fill="x")
 
-        self.new_pasajeros_entries = []
+        self.new_pasajeros_entries = [] 
 
         def add_new_passenger_fields():
             if len(self.modified_pasajeros_entries) + len(self.new_pasajeros_entries) >= 3:
@@ -549,6 +501,7 @@ class App:
             nuevos_pasajeros_datos = []
             nuevas_sillas_solicitadas = []
             
+
             for p_entry in self.modified_pasajeros_entries:
                 pasajero_obj = p_entry["pasajero_obj"]
                 tipo_silla_str = p_entry["tipo_silla_var"].get()
@@ -584,17 +537,21 @@ class App:
                 return
 
             try:
+
                 for silla_original in reserva_obj.sillas:
                     silla_original.esta_reservada = False
-    
+                
+
                 sillas_asignadas_nuevas = []
                 precio_total_modificado = 0.0
                 
                 for i, tipo_silla_solicitado in enumerate(nuevas_sillas_solicitadas):
                     silla_encontrada = reserva_obj.vuelo.reservar_silla(tipo_silla_solicitado)
                     if not silla_encontrada:
+
                         for s_temp in sillas_asignadas_nuevas:
                             s_temp.esta_reservada = False
+
                         for silla_original in reserva_obj.sillas:
                             silla_original.esta_reservada = True 
                         raise ValueError(f"No hay sillas {tipo_silla_solicitado.value} disponibles para el pasajero {nuevos_pasajeros_datos[i].nombre}.")
@@ -605,13 +562,14 @@ class App:
                     elif tipo_silla_solicitado == TipoSilla.ECONOMICA:
                         precio_total_modificado += sistema.PRECIO_SILLA_ECONOMICA
 
+
                 reserva_obj.pasajeros = nuevos_pasajeros_datos
                 reserva_obj.sillas = sillas_asignadas_nuevas
                 reserva_obj.precio_total = precio_total_modificado
                 
                 sistema.guardar_datos()
                 messagebox.showinfo("Modificación Exitosa", f"Reserva {reserva_obj.id_reserva} modificada exitosamente.\nNuevo Precio Total: ${reserva_obj.precio_total:,.0f}")
-                self.pantalla_gestionar_reservas() 
+                self.pantalla_gestionar_reservas()
             except ValueError as e:
                 messagebox.showerror("Error al Modificar", str(e))
             except Exception as e:
@@ -642,13 +600,19 @@ class App:
         self.pantalla_checkin_equipaje(reserva_a_procesar)
 
     def pantalla_checkin_equipaje(self, reserva):
-        """
-        Puedes elegir q tipo de equipaje usarás y el peso de cada uno
-        """
+        """Muestra la pantalla para seleccionar el equipaje durante el check-in."""
         self.limpiar_ventana()
         tk.Label(self.root, text=f"Check-in para Reserva {reserva.id_reserva}", font=("Arial", 14)).pack(pady=10)
         tk.Label(self.root, text=f"Vuelo: {reserva.vuelo.codigo} - {reserva.vuelo.ciudad_origen} a {reserva.vuelo.ciudad_destino}").pack()
         tk.Label(self.root, text="Seleccione equipaje para cada pasajero:").pack(pady=5)
+
+ 
+        tk.Label(self.root, text="--- Costos de Equipaje ---", font=("Arial", 10, "bold")).pack(pady=5)
+        tk.Label(self.root, text="• Equipaje de Mano: Incluido (gratis)").pack(anchor="w", padx=20)
+        tk.Label(self.root, text="• Maleta de Cabina (máx 10 kg): Incluida en Preferencial, $40,000 en Económica").pack(anchor="w", padx=20)
+        tk.Label(self.root, text="• Maleta de Bodega: 1ra incluida en Preferencial, $50,000 + $1,000/kg en Económica y adicionales").pack(anchor="w", padx=20)
+        tk.Label(self.root, text="-------------------------", font=("Arial", 10, "bold")).pack(pady=5)
+
 
         self.equipaje_entries_por_pasajero = []
         
@@ -661,8 +625,8 @@ class App:
             equipaje_info_para_pasajero = []
 
             mano_var = tk.IntVar()
-            tk.Checkbutton(p_frame, text="Equipaje de Mano (Gratis)", variable=mano_var).pack(anchor="w")
-            equipaje_info_para_pasajero.append({"tipo": TipoEquipaje.MANO, "var": mano_var, "peso_entry": None, "volumen_entry": None})
+            tk.Checkbutton(p_frame, text="Equipaje de Mano", variable=mano_var).pack(anchor="w")
+            equipaje_info_para_pasajero.append({"tipo": TipoEquipaje.MANO, "var": mano_var, "peso_entry": None})
 
             cabina_frame = tk.Frame(p_frame)
             cabina_frame.pack(anchor="w")
@@ -671,11 +635,8 @@ class App:
             tk.Label(cabina_frame, text="Peso (kg):").pack(side=tk.LEFT, padx=5)
             cabina_peso_entry = tk.Entry(cabina_frame, width=5)
             cabina_peso_entry.pack(side=tk.LEFT)
-            tk.Label(cabina_frame, text="Volumen (L):").pack(side=tk.LEFT, padx=5)
-            cabina_volumen_entry = tk.Entry(cabina_frame, width=5)
-            cabina_volumen_entry.pack(side=tk.LEFT)
             equipaje_info_para_pasajero.append({"tipo": TipoEquipaje.CABINA, "var": cabina_var,
-                                       "peso_entry": cabina_peso_entry, "volumen_entry": cabina_volumen_entry})
+                                       "peso_entry": cabina_peso_entry})
 
             bodega_frame = tk.Frame(p_frame)
             bodega_frame.pack(anchor="w")
@@ -684,11 +645,8 @@ class App:
             tk.Label(bodega_frame, text="Peso (kg):").pack(side=tk.LEFT, padx=5)
             bodega_peso_entry = tk.Entry(bodega_frame, width=5)
             bodega_peso_entry.pack(side=tk.LEFT)
-            tk.Label(bodega_frame, text="Volumen (L):").pack(side=tk.LEFT, padx=5)
-            bodega_volumen_entry = tk.Entry(bodega_frame, width=5)
-            bodega_volumen_entry.pack(side=tk.LEFT)
             equipaje_info_para_pasajero.append({"tipo": TipoEquipaje.BODEGA, "var": bodega_var,
-                                       "peso_entry": bodega_peso_entry, "volumen_entry": bodega_volumen_entry})
+                                       "peso_entry": bodega_peso_entry})
 
             self.equipaje_entries_por_pasajero.append(equipaje_info_para_pasajero)
 
@@ -700,18 +658,15 @@ class App:
                     if eq_data["var"].get() == 1:
                         tipo = eq_data["tipo"]
                         peso = 0.0
-                        volumen = 0.0
                         
                         try:
                             if eq_data["peso_entry"]:
                                 peso = float(eq_data["peso_entry"].get() or 0.0)
-                            if eq_data["volumen_entry"]:
-                                volumen = float(eq_data["volumen_entry"].get() or 0.0)
                         except ValueError:
-                            messagebox.showerror("Error", f"Peso/Volumen inválido para {tipo.value} de {pasajero.nombre}")
+                            messagebox.showerror("Error", f"Peso inválido para {tipo.value} de {pasajero.nombre}")
                             return
                         
-                        equipaje_obj = Equipaje(tipo, peso, volumen)
+                        equipaje_obj = Equipaje(tipo, peso) 
                         checkin_manager.agregar_equipaje((silla_asociada, equipaje_obj))
 
             try:
@@ -729,6 +684,7 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_gestionar_reservas).pack()
 
     def cancelar_reserva(self):
+        """Cancela la reserva seleccionada por el usuario."""
         selected_item = self.reservas_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione una reserva para cancelar.")
@@ -746,9 +702,7 @@ class App:
                 messagebox.showerror("Error al Cancelar", str(e))
 
     def consultar_reservas(self):
-        """
-        Acá los admin puede revisar las reservas que se han hecho
-        """
+        """Muestra todas las reservas vendidas (para administradores)."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Reservas Vendidas", font=("Arial", 14)).pack(pady=10)
 
@@ -788,9 +742,7 @@ class App:
         tk.Button(self.root, text="Cerrar", command=self.menu_administrador).pack(pady=5)
 
     def consultar_pasajeros(self):
-        """
-        Acá los admin puede revisar los pasajeros que hay
-        """
+        """Muestra los datos de todos los pasajeros en el sistema (para administradores)."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Datos de Pasajeros", font=("Arial", 14)).pack(pady=10)
 
