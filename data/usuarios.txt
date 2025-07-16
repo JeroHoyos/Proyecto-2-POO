@@ -8,3 +8,5 @@ Cliente|David Blásquez|david.blasquez@gmail.com|10921345678|3104445566|0|
 Cliente|Marco Paluszny|marco.paluszny@gmail.com|10769876543|3207778899|0|
 Cliente|Leopoldo Múnera|leopoldo.munera@gmail.com|10501234567|3012223344|0|
 Cliente|Jhon Fredy Ruiz|jhon.ruiz@gmail.com|10112233445|3159990011|0|
+Administrador|Jerónimo Hoyos|jeronimo@gmail.com|10123456789|3009876543|0|
+Cliente|Jero Hoyos|jero@gmail.com|10987654321|3047778899|0|

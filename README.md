@@ -3,12 +3,15 @@
 ## Integrantes
 
 Jerónimo Hoyos Botero
-## Usuarios 
-## Usuario Presentación
+## Prsentación 
+## Usuarios Presentación
 #### Administradores
 Jerónimo Hoyos | jeronimo@gmail.com | ID: 10123456789 | contraseña: 3009876543
+
+Vuelo: LA9876Q CALI BARRANQUILLA MIERCOLES 11:30 18 220
 #### Usuarios
-Jero Hoyos | jero@gmail.com | ID: 10987654321 | contraseña: 3125554433
+Jero Hoyos | jero@gmail.com | ID: 10987654321 | contraseña: 3125554433 | contraseña nueva: 3047778899
+
 ## Usuarios cargados
 #### Administradores
 Carlos Vélez | carlos.velez@gmail.com | ID: 11001122334 | contraseña: 3009876543
