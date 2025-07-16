@@ -3,7 +3,7 @@
 ## Integrantes
 
 Jerónimo Hoyos Botero
-## Prsentación 
+## Presentación 
 ### 1. Crear Usuarios
 #### Administrador
 Jerónimo Hoyos | jeronimo@gmail.com | ID: 10123456789 | contraseña: 3009876543
@@ -20,11 +20,34 @@ LA9876Q
 
 ### 4. Reservar vuelo
 Jero Hoyos | ID: 10987654321 | Economica
+
 Diana Botero | ID: 10987654321 | Preferencial
+
 Juan Carlos Hoyos | ID: 10678901234 | Preferencial
 
-### 5-7. Realizar Check IN
+### 5,7. Realizar Check IN
 
+
+### 6. Mostrar uso de Millas
+
+Carlos Reza | carlos.reza@gmail.com | ID: 10854254785 | contraseña: 3001112233
+### 8. Mostrar txt
+
+#### reservas.txt
+
+Acá todos las reservas separados por |
+#### siguiente_id_reserva.txt
+
+Para guardar el último ID q vaya usar, así no tener duplicados
+#### usuarios.txt
+
+Acá todos los usuarios separados por |
+#### vuelos_y_sillas.txt
+
+Acá contiene todos los vuelos (separados por :) y silla (separados por ;).
+#### vuelos.txt 
+
+Acá contiene todos los vuelos iniciales dado por la profesora.
 ## Usuarios cargados
 #### Administradores
 Carlos Vélez | carlos.velez@gmail.com | ID: 11001122334 | contraseña: 3009876543
