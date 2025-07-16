@@ -11,10 +11,6 @@ class CheckIn:
         self.equipajes.append(equipaje_data)
 
     def realizar_check_in(self):
-        """
-        Ejecuta el check-in de la reserva, acumula millas y calcula costos de equipaje.
-       
-        """
         if not self.reserva.checkin_realizado:
             self.reserva.usuario.millas += 500
             
@@ -33,7 +29,6 @@ class CheckIn:
         return False, f"Error: El check-in para la reserva {self.reserva.id_reserva} ya ha sido realizado."
 
     def calcular_costo_total_equipaje(self):
-        """Calcula el costo total del equipaje según las políticas de la aerolínea."""
         self.costo_total_equipaje = 0
         maletas_bodega_gratuitas_usadas_por_silla_preferencial_count = {silla.id_silla: 0 for silla in self.reserva.sillas if silla.tipo == TipoSilla.PREFERENCIAL}
 

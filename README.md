@@ -2,7 +2,7 @@
 
 ## Integrantes
 
-Jerónimo Hoyos Botero
+Jerónimo Hoyos Botero | Ciencias de la Computación
 ## Presentación 
 ### 1. Crear Usuarios
 #### Administrador

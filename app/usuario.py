@@ -45,11 +45,9 @@ class Usuario(ABC):
             raise ValueError(f"Tipo de usuario desconocido: {tipo}")
             
     def consultar_vuelos_vendidos(self, sistema):
-        """Consulta los vuelos que tienen reservas asociadas a este usuario."""
         return [r for r in self.reservas if r.vuelo is not None]
 
     def consultar_datos_pasajeros(self, sistema):
-        """Consulta los datos de los pasajeros asociados a las reservas de este usuario."""
         pasajeros_por_reserva = []
         for reserva in self.reservas:
             pasajeros_nombres = [p.nombre for p in reserva.pasajeros]

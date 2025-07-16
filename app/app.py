@@ -14,7 +14,6 @@ sistema.cargar_datos()
 
 
 class App:
-    """Clase principal de la aplicación GUI para el sistema de reservas de vuelos."""
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Reserva de Vuelos")
@@ -25,7 +24,6 @@ class App:
         self.pantalla_inicio()
 
     def pantalla_inicio(self):
-        """Muestra la pantalla de inicio con opciones de login y registro."""
         self.limpiar_ventana()
 
         tk.Label(self.root, text="Bienvenido al sistema de vuelos", font=("Arial", 16)).pack(pady=10)
@@ -92,7 +90,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_inicio).pack()
 
     def menu_administrador(self):
-        """Muestra el menú para el administrador."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Menú Administrador", font=("Arial", 14)).pack(pady=10)
 
@@ -102,7 +99,6 @@ class App:
         tk.Button(self.root, text="Cerrar sesión", command=self.pantalla_inicio).pack(pady=10)
 
     def pantalla_agregar_vuelo(self):
-        """Muestra la pantalla para agregar un nuevo vuelo."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Agregar vuelo", font=("Arial", 14)).pack(pady=10)
 
@@ -136,7 +132,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_administrador).pack()
 
     def menu_cliente(self):
-        """Muestra el menú para el cliente."""
         self.limpiar_ventana()
         tk.Label(self.root, text=self.usuario_actual.ver_menu(), font=("Arial", 14)).pack(pady=10)
 
@@ -147,11 +142,9 @@ class App:
         tk.Button(self.root, text="Cerrar sesión", command=self.pantalla_inicio).pack(pady=10)
 
     def ver_mis_millas(self):
-        """Muestra la cantidad de millas acumuladas por el usuario actual."""
         messagebox.showinfo("Mis Millas", f"Actualmente tienes {self.usuario_actual.millas} millas acumuladas.")
 
     def pantalla_cambiar_contrasena(self):
-        """Muestra la pantalla para cambiar la contraseña del usuario."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Cambiar Contraseña", font=("Arial", 14)).pack(pady=10)
 
@@ -191,7 +184,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def pantalla_buscar_vuelos(self):
-        """Muestra la pantalla para buscar vuelos."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Buscar vuelos", font=("Arial", 14)).pack(pady=10)
 
@@ -244,7 +236,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def seleccionar_vuelo_para_reserva(self):
-        """Selecciona un vuelo de la lista para proceder con la reserva."""
         selected_item = self.vuelos_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione un vuelo de la lista.")
@@ -261,7 +252,6 @@ class App:
             messagebox.showerror("Error", "No se pudo encontrar el vuelo seleccionado.")
 
     def pantalla_reservar_vuelo(self):
-        """Muestra la pantalla para reservar un vuelo."""
         if not self.vuelo_seleccionado:
             messagebox.showerror("Error", "Ningún vuelo seleccionado para reservar.")
             self.menu_cliente()
@@ -359,7 +349,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_buscar_vuelos).pack()
 
     def pantalla_gestionar_reservas(self):
-        """Muestra la pantalla para gestionar las reservas del usuario actual."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Gestionar Mis Reservas", font=("Arial", 14)).pack(pady=10)
 
@@ -401,7 +390,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_cliente).pack()
 
     def modificar_reserva(self):
-        """Prepara la pantalla para modificar la reserva seleccionada."""
         selected_item = self.reservas_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione una reserva para modificar.")
@@ -422,7 +410,6 @@ class App:
         self.pantalla_modificar_reserva(reserva_a_modificar)
 
     def pantalla_modificar_reserva(self, reserva_obj):
-        """Muestra la pantalla para modificar los detalles de una reserva."""
         self.limpiar_ventana()
         tk.Label(self.root, text=f"Modificar Reserva: {reserva_obj.id_reserva}", font=("Arial", 14)).pack(pady=10)
         tk.Label(self.root, text=f"Vuelo: {reserva_obj.vuelo.codigo} - {reserva_obj.vuelo.ciudad_origen} a {reserva_obj.vuelo.ciudad_destino}").pack()
@@ -600,7 +587,6 @@ class App:
         self.pantalla_checkin_equipaje(reserva_a_procesar)
 
     def pantalla_checkin_equipaje(self, reserva):
-        """Muestra la pantalla para seleccionar el equipaje durante el check-in."""
         self.limpiar_ventana()
         tk.Label(self.root, text=f"Check-in para Reserva {reserva.id_reserva}", font=("Arial", 14)).pack(pady=10)
         tk.Label(self.root, text=f"Vuelo: {reserva.vuelo.codigo} - {reserva.vuelo.ciudad_origen} a {reserva.vuelo.ciudad_destino}").pack()
@@ -684,7 +670,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.pantalla_gestionar_reservas).pack()
 
     def cancelar_reserva(self):
-        """Cancela la reserva seleccionada por el usuario."""
         selected_item = self.reservas_tree.selection()
         if not selected_item:
             messagebox.showwarning("Advertencia", "Por favor, seleccione una reserva para cancelar.")
@@ -742,7 +727,6 @@ class App:
         tk.Button(self.root, text="Cerrar", command=self.menu_administrador).pack(pady=5)
 
     def consultar_pasajeros(self):
-        """Muestra los datos de todos los pasajeros en el sistema (para administradores)."""
         self.limpiar_ventana()
         tk.Label(self.root, text="Datos de Pasajeros", font=("Arial", 14)).pack(pady=10)
 
@@ -778,7 +762,6 @@ class App:
         tk.Button(self.root, text="Volver", command=self.menu_administrador).pack()
 
     def limpiar_ventana(self):
-        """Limpia todos los widgets de la ventana principal."""
         for widget in self.root.winfo_children():
             widget.destroy()
 
