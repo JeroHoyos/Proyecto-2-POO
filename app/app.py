@@ -28,7 +28,7 @@ class App:
         """Muestra la pantalla de inicio con opciones de login y registro."""
         self.limpiar_ventana()
 
-        tk.Label(self.root, text="Bienvenido al sistema de reservas", font=("Arial", 16)).pack(pady=10)
+        tk.Label(self.root, text="Bienvenido al sistema de vuelos", font=("Arial", 16)).pack(pady=10)
 
         tk.Button(self.root, text="Iniciar Sesión", width=20, command=self.pantalla_login).pack(pady=5)
         tk.Button(self.root, text="Registrarse", width=20, command=self.pantalla_registro).pack(pady=5)

@@ -16,7 +16,9 @@ LA9876Q CALI BARRANQUILLA MIERCOLES 11:30 10 130
 
 ### 3. Buscar vuelo
 
-LA9876Q
+Busqueda por origen: CALI
+
+Busqueda por destino: BARRANQUILLA
 
 ### 4. Reservar vuelo
 Jero Hoyos | ID: 10987654321 | Economica 
